@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <title>我的导航</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <header></header>
+     <main>
+         <style>
+           
+            </style>
+        
+       <div class="wrapper" id="main"> 
+
+       </div>  
+        
+     </main>
+     <footer></footer>
+  
+     <script>
+         // 1. 初始化数据
+
+        
+        var hashA = init()
+        var keys = hashA['keys']
+        var hash = hashA['hash']
+
+          
+        
+        // 2、生成键盘
+        // 遍历keys 生成 kbd标签
+         generateKeyboard(keys,hash)         
+           
+          
+        // 3、监听键盘
+        listenToKeyborad(hash)
+
+
+
+            
+           // 下面是工具函数
+            function getFormLocalStorage(name){
+               return JSON.parse(localStorage.getItem('name') || 'null')
+
+            }
+            function tag(tagName){
+                return document.createElement(tagName)
+            }
+
+
+
+            function tag(tagName){
+               
+               return document.createElement(tagName)
+           }
+
+           function creatSpan(textContent){
+               var span = tag('span')
+                   span.textContent = textContent
+                   span.className = 'text'
+                   return span
+
+           }
+
+           function createButton(id){
+               var button = tag('button')
+               button.textContent = '编辑'
+               button.id= id 
+               button.onclick = function(xzkjcnxlkcjlk){ 
+                 var  button2 = xzkjcnxlkcjlk['target']
+                  var img2 = button2.previousSibling // 拿img2的过程  用previousSinbling
+              var key = button2['id']
+              var x = prompt('给我一个网址')
+               hash[key] = x // hash变更
+               img2.src = 'http://'+x + '/favicon.ico'
+               img2.onerror = function(xxx){
+                   xxx.target.src = '//i.loli.net/2017/11/10/5a05afbc5e183.png'
+
+           } 
+               localStorage.setItem('zzz', JSON.stringify(hash)) // hash存档
+               
+               } 
+               return button
+
+           }
+           function createImg(domain){
+               var img = tag('img')
+                //如果路径存在，就将图标路径设置为src图标。   如果不存在，就将图标路径设置为自己准备的图片路径。显示为.。
+               if(domain){
+                   img.src = 'http://'+ domain  + '/favicon.ico'
+               }
+                else{
+               img.src = '//i.loli.net/2017/11/10/5a05afbc5e183.png'
+           }
+            //监听错误
+           img.onerror = function(xxx){
+               xxx.target.src = '//i.loli.net/2017/11/10/5a05afbc5e183.png'
+
+           }
+           return img
+
+           }
+
+
+           function init(){
+              //声明一个二维数组
+      var keys = {
+        '0': {0:'q',1:'w',2:'e',3:'r',4:'t',5:'y',6:'u',7:'i',8:'o',9:'p',length:10},
+		'1': {0:'a',1:'s',2:'d',3:'f',4:'g',5:'h',6:'j',7:'k',8:'l',length:9},
+		'2': {0:'z',1:'x',2:'c',3:'v',4:'b',5:'n',6:'m',length:7},
+		'length': 3
+     }
+     //声明一个hash
+     var  hash = {'q': 'qq.com',
+        'w': 'weibo.com',
+        'e': 'ele.me', 
+        'r': 'renren.com',
+        't': 'tianya.com', 
+        'y': 'youtube.com',
+         'u': 'uc.com' ,  
+         'i': 'iqiyi.com',
+        'o': 'opera.com',
+        'p': undefined, 
+        'a': 'acfun.tv', 
+        's': 'sohu.com', 
+        'z': 'zhihu.com',
+         'm': 'www.mcdonalds.com.cn'
+            }
+            //取出localstorage中的zzz对应的hash
+           var  hashInLocalStorage = getFormLocalStorage('zzz')
+            if( hashInLocalStorage){
+                hash =  hashInLocalStorage
+            }
+            return {
+                "keys" : keys,
+                "hash" : hash
+            }
+
+         }
+         function generateKeyboard(){
+            for(var index = 0; index< keys['length']; index = index+1 ){
+            var div = tag('div') // 创建一个标签语法 必须是字符串   第一个重点
+               div.className = 'row'
+
+                main.appendChild(div)    // 创建一个div标签，让div标签做儿子。
+
+               var row = keys[index] // 第一个数组  第二个数组  第三个数组
+                for(var index2 = 0;index2< row['length'];index2 = index2+1 ){
+                    var span =  creatSpan(row[index2])
+                
+             
+                     var button = createButton(row[index2])
+
+
+                      var img = createImg(hash[row[index2]])
+                     
+            var kbd = tag('kbd')
+            kbd.className = 'key' 
+
+            kbd.appendChild(span)  
+            kbd.appendChild(img) 
+            kbd.appendChild(button)
+
+            
+            div.appendChild(kbd)
+               
+
+            }
+               
+        }
+           }
+           function listenToKeyborad(hash){
+           document.onkeypress = function(xzkjcnxlkcjlk){  
+              var  key = xzkjcnxlkcjlk['key'] //知道用户用了什么键了
+              var  website = hash[key] //得到相应的键对应的网站
+                // location.href = 'http://' + website // 当前地址变为新的网站地址
+               window.open('http://' + website,'_blank') //新窗口打开
+            }
+        }
+
+    </script>
+</body>
+
+</html>    
